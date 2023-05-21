@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mirror.travel.mapper.RouteMapper">
+
+    <select id="count" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM tab_route WHERE cid = #{cid}
+    </select>
+
+    <select id="pageFindRoute" parameterType="Map" resultType="Route">
+        SELECT * FROM tab_route WHERE cid = #{cid} LIMIT #{start},#{size};
+    </select>
+
+    <select id="findById" parameterType="String" resultType="Route">
+        SELECT * FROM tab_route WHERE rid = #{rid}
+    </select>
+
+    <update id="updateCountByRid" parameterType="String">
+        UPDATE tab_route SET count = count + 1 WHERE rid = #{rid}
+    </update>
+
+    <select id="findList" resultType="Route">
+        SELECT * FROM tab_route ORDER BY count DESC LIMIT 5;
+    </select>
+
+</mapper>

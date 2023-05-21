@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mirror.travel.mapper.OrderMapper">
+
+    <insert id="insert" parameterType="Order">
+        INSERT INTO tab_order VALUES
+        (#{orderid},#{transactionid},#{payment}
+        ,#{paymenttype},#{status},#{createtime},#{updatetime},#{paymenttime},#{closetime}
+        ,#{userid},#{seller},#{goods})
+    </insert>
+
+    <update id="updateStatus" parameterType="Order">
+        UPDATE tab_order SET
+        `status` = #{status},
+        updatetime = #{updatetime},
+        paymenttime = #{paymenttime},
+        closetime = #{closetime}
+        WHERE
+        orderid = #{orderid}
+    </update>
+
+
+    <select id="findByOrderId" parameterType="String" resultType="Order">
+        SELECT * FROM tab_order WHERE orderid = #{orderid}
+    </select>
+
+</mapper>
