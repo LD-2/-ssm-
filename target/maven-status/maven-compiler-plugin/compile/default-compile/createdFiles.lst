@@ -2,6 +2,7 @@ com\mirror\travel\mapper\CategoryMapper.class
 com\mirror\travel\service\impl\UserServiceImpl.class
 com\mirror\travel\pojo\Seller.class
 com\mirror\travel\mapper\SellerMapper.class
+com\mirror\travel\utils\ValidateCodeUtil.class
 com\mirror\travel\mapper\RouteImgMapper.class
 com\mirror\travel\pojo\RouteImg.class
 com\mirror\travel\service\UserService.class
