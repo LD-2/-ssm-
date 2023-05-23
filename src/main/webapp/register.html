@@ -34,9 +34,11 @@
             if(flag){
                 $("#username").css("border","")
                 $("#errorMsg").html("")
+                return true
             }else{
                 $("#username").css("border","1px solid red")
                 $("#errorMsg").html("<b>用户名校验不合法</b>")
+                return false
             }
         }
 
@@ -49,9 +51,11 @@
             if(flag){
                 $("#password").css("border","")
                 $("#errorMsg").html("")
+                return true
             }else{
                 $("#password").css("border","1px solid red")
                 $("#errorMsg").html("<b>密码校验不合法</b>")
+                return false
             }
         }
 
@@ -64,9 +68,11 @@
             if(flag){
                 $("#email").css("border","")
                 $("#errorMsg").html("")
+                return true
             }else{
                 $("#email").css("border","1px solid red")
                 $("#errorMsg").html("<b>邮箱校验不合法</b>")
+                return false
             }
         }
 
@@ -113,11 +119,31 @@
             $.get("user/sendSmsCheckCode?phone="+telephone,(resp)=>{
                 if(resp.code==0){
                     // $("#checkCodeKey").val(resp.result)
-                    $("#check").val(resp.result)
+                    rewriteCountdown()
+                    // $("#check").val(resp.result)
                 }else{
                     $("#errorMsg").html(resp.msg)
                 }
             })
+        }
+
+        let rewriteCountdown = ()=>{
+            $("#checkCodeButton").attr("disabled","disabled")
+            $("#checkCodeButton").removeClass("checkCode")
+            $("#checkCodeButton").addClass("checkCode2")
+            let sec = 60
+            let code = self.setInterval(()=>{
+                sec--
+                $("#checkCodeButton").val(sec+"秒后重新发送")
+                if(sec<=0){
+                    window.clearInterval(code)
+                    $("#checkCodeButton").val("立即获取")
+                    $("#checkCodeButton").removeClass("checkCode2")
+                    $("#checkCodeButton").addClass("checkCode")
+                    $("#checkCodeButton").removeAttr("disabled")
+                }
+            },1000)
+
         }
 
         //页面加载事件
@@ -127,6 +153,18 @@
             $("#email").keyup(checkEmail)
             $("#telephone").blur(checkTelephone)
             $("#check").blur(checkCheckCode)
+            $("#registerForm").submit(()=>{
+                if(checkUserName()&&checkPassWord()&&checkEmail()&&checkTelephone()&&checkCheckCode()){
+                    $.post("user/registerForm",$("#registerForm").serialize(),(resp)=>{
+                        if(resp.flag){
+                            location.href="register_ok.html"
+                        }else{
+                            $("#errorMsg").html(resp.errorMsg)
+                        }
+                    })
+                }
+                return false
+            })
         })
 
     </script>
@@ -211,7 +249,7 @@
                             <label for="check">验证码</label>
                         </td>
                         <td class="td_right check">
-                            <input type="hidden" id="checkCodeKey" name="checkCodeKey">
+<!--                            <input type="hidden" id="checkCodeKey" name="checkCodeKey">-->
                             <input type="text" id="check" name="check" class="check" placeholder="短信验证码">
                             <input type="button" id="checkCodeButton" class="checkCode" value="立即获取"
                                    onclick="sendSmsCheckCode()">

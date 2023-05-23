@@ -50,10 +50,10 @@ public class SendSmsUtil {
 
     public static SendSmsResponse sendNoToken(String phone,String code) throws Exception {
         // 工程代码泄露可能会导致AccessKey泄露，并威胁账号下所有资源的安全性。以下代码示例仅供参考，建议使用更安全的 STS 方式，更多鉴权访问方式请参见：https://help.aliyun.com/document_detail/378657.html
-        Client client = SendSmsUtil.createClient("LTAI5tJk79U36NHwVKwfM69v", "sMkZzklD8XBaT5GJ3F5cv5CxXlYre3");
+        Client client = SendSmsUtil.createClient("自己申请的AccessKey ID", "同自己申请的AccessKey Secret");
         SendSmsRequest sendSmsRequest = new SendSmsRequest()
-                .setSignName("普通项目验证码")
-                .setTemplateCode("SMS_460870268")
+                .setSignName("自己的签名")
+                .setTemplateCode("自己的模板名")
                 .setPhoneNumbers(phone)
                 .setTemplateParam("{\"code\":\""+code+"\"}");
         RuntimeOptions runtime = new RuntimeOptions();
@@ -63,8 +63,8 @@ public class SendSmsUtil {
 
     public static void main(String[] args) {
         try {
-//            SendSmsResponse resp = SendSmsUtil.sendNoToken("13781877026", "696966");
-            SendSmsResponse resp = SendSmsUtil.sendNoToken("15886792979", "778966");
+            SendSmsResponse resp = SendSmsUtil.sendNoToken("13781877026", "696966");
+//            SendSmsResponse resp = SendSmsUtil.sendNoToken("15886792979", "778966");
             System.out.println(resp);
             System.out.println("------------------------------------");
             com.aliyun.teaconsole.Client.log(com.aliyun.teautil.Common.toJSONString(resp));

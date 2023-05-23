@@ -21,20 +21,76 @@
     <script src="js/jquery-3.3.1.js"></script>
 
     <script>
+
+        function checkUserName(){
+            let username = $("#username").val();
+            // /^是校验的开始 \w{8,20}是内容 $/是结束
+            var_username=/^\w{8,20}$/
+            let flag = var_username.test(username)
+            if(flag){
+                $("#username").css("border","")
+                $("#errorMsg").html("")
+                return true
+            }else{
+                $("#username").css("border","1px solid red")
+                $("#errorMsg").html("<b>用户名校验不合法</b>")
+                return false
+            }
+        }
+
+        function checkPassWord(){
+
+            let password = $("#password").val();
+            // /^是校验的开始 \w{8,20}是内容 $/是结束
+            var_password=/^\w{8,20}$/
+            let flag = var_password.test(password)
+            if(flag){
+                $("#password").css("border","")
+                $("#errorMsg").html("")
+                return true
+            }else{
+                $("#password").css("border","1px solid red")
+                $("#errorMsg").html("<b>密码校验不合法</b>")
+                return false
+            }
+        }
+
+        function checkCheckCode(){
+
+            let checkCode = $("#check").val();
+            // /^是校验的开始 \w{8,20}是内容 $/是结束
+            var_checkCode=/^\w{4}$/
+            let flag = var_checkCode.test(checkCode)
+            if(flag){
+                $("#check").css("border","")
+                $("#errorMsg").html("")
+                return true
+            }else{
+                $("#check").css("border","1px solid red")
+                $("#errorMsg").html("<b>验证码校验不合法</b>")
+                return false
+            }
+        }
+        $(()=>{
+            $("#username").keyup(checkUserName)
+            $("#password").keyup(checkPassWord)
+            $("#check").keyup(checkCheckCode)
+        })
         function loginBut() {
             let jQuery = $("#loginForm").serialize();
             console.log(jQuery)
-
-            $.post("user/login", jQuery, function (data) {
-                console.log(data)
-                if (data.flag) {
-                    location.href = "index.html";
-                } else {
-                    //登录失败
-                    $("#errorMsg").html(data.errorMsg);
-                    $("#errorMsg").css("display", "block");
-                }
-            });
+            if(checkUserName()&&checkPassWord()&&checkCheckCode()){
+                $.post("user/login", jQuery, function (data) {
+                    console.log(data)
+                    if (data.flag) {
+                        location.href = "index.html";
+                    } else {
+                        //登录失败
+                        $("#errorMsg").html(data.errorMsg);
+                        $("#errorMsg").css("display", "block");
+                    }
+                });
+            }
         }
     </script>
 </head>
@@ -55,13 +111,13 @@
         <div class="login_inner">
 
             <!--登录错误提示消息-->
-            <div id="errorMsg" class="alert alert-danger"></div>
+            <div id="errorMsg" style="color:red;"></div>
             <form id="loginForm" action="" method="post" accept-charset="utf-8">
                 <input type="hidden" name="action" value="login"/>
-                <input name="username" type="text" placeholder="请输入账号" autocomplete="off">
-                <input name="password" type="password" placeholder="请输入密码" autocomplete="off">
+                <input id="username" name="username" type="text" placeholder="请输入账号" autocomplete="off">
+                <input id="password" name="password" type="password" placeholder="请输入密码" autocomplete="off">
                 <div class="verify">
-                    <input name="check" type="text" placeholder="请输入验证码" autocomplete="off">
+                    <input id="check" name="check" type="text" placeholder="请输入验证码" autocomplete="off">
                     <span><img src="imageCheckCode?" alt="" onclick="changeCheckCode(this)"></span>
                     <script type="text/javascript">
                         //图片点击事件
