@@ -63,8 +63,12 @@ public class SendSmsUtil {
 
     public static void main(String[] args) {
         try {
+<<<<<<< HEAD
             SendSmsResponse resp = SendSmsUtil.sendNoToken("13781877026", "696966");
 //            SendSmsResponse resp = SendSmsUtil.sendNoToken("15886792979", "778966");
+=======
+//            SendSmsResponse resp = SendSmsUtil.sendNoToken("已经授权的手机号", "696966");
+>>>>>>> 1bff48a68dbf6c5faf6898a654376f4454f6de91
             System.out.println(resp);
             System.out.println("------------------------------------");
             com.aliyun.teaconsole.Client.log(com.aliyun.teautil.Common.toJSONString(resp));
