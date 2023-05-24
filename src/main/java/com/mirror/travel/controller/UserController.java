@@ -1,18 +1,14 @@
 package com.mirror.travel.controller;
 
-import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
 import com.mirror.travel.pojo.ResultInfo;
 import com.mirror.travel.pojo.SmsResult;
 import com.mirror.travel.pojo.User;
 import com.mirror.travel.service.UserService;
-import com.mirror.travel.utils.SendSmsUtil;
-import com.mirror.travel.utils.ValidateCodeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -44,4 +40,16 @@ public class UserController {
         return userService.login(request);
     }
 
+    @ResponseBody
+    @GetMapping("/findOne")
+    public User findOne(HttpSession session){
+        return (User)session.getAttribute("user");
+    }
+
+    @GetMapping("/exit")
+    public String exit(HttpSession session){
+//        session.invalidate();
+        session.removeAttribute("user");
+        return "redirect:/login.html";
+    }
 }

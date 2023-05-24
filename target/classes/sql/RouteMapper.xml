@@ -10,7 +10,7 @@
         SELECT * FROM tab_route WHERE cid = #{cid} LIMIT #{start},#{size};
     </select>
 
-    <select id="findById" parameterType="String" resultType="Route">
+    <select id="findById" resultType="Route">
         SELECT * FROM tab_route WHERE rid = #{rid}
     </select>
 
