@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <style type="text/css">
+    body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+  </style>
+  <script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=WhUWtbXZWa4DDhhUaxMehIkVLlhGm89F"></script>
+  <title>地图展示</title>
+
+<!--  使用二维码的准备-->
+  <script type="text/javascript" src="js/jquery.1.8.3.min.js"></script>
+  <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+<!--  -->
+
+</head>
+<body>
+
+<div style="text-align:center" id="qrcode"></div>
+
+<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+
+
+<!--  二维码设置-->
+  $("#qrcode").makeQRCode({
+    text:"sb 扫你妈呢",
+    render:"image", //渲染模式 取值 image div canvas
+    ecLevel:"H", //设置容错级别 L是7% M：15% Q：25% H是30%
+    minVersion:"3", //二维码密度 取值 0-10
+    fill:"Green", //设置二维码颜色
+    background:"white", //设置二维码背景颜色
+    size:300, //设置二维码大小 默认px
+    radius:50, //设置圆润度 0-50
+    quiet:4, //设置二维码边框
+    mode:2, //设置显示模式 0 不显示logo   1 文字且占整行  2 文字居中  3 图片且占一行  4 图片居中
+    mSize:10, //设置logo的文字大小
+    label:"love", //设置logo文字
+    fontname:"微软雅黑",//logo字体样式
+    fontcolor:"black",
+  })
+
+
+
+
+
+  // GL版命名空间为BMapGL
+  // 按住鼠标右键，修改倾斜角和角度
+  var map = new BMapGL.Map("allmap");    // 创建Map实例
+  map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 15);  // 初始化地图,设置中心点坐标和地图级别
+  map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+</script>

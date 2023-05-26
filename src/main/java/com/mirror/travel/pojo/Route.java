@@ -2,7 +2,6 @@ package com.mirror.travel.pojo;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 旅游线路商品实体类

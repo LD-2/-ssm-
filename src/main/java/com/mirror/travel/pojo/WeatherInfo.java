@@ -8,7 +8,6 @@ public class WeatherInfo {
     private JSONObject now;
     private JSONArray forecasts;
 
-
     public JSONObject getNow() {
         return now;
     }

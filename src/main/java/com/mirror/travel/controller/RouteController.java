@@ -31,7 +31,7 @@ public class RouteController {
 
     @ResponseBody
     @GetMapping("/findOne")
-    public Route findOne(String rid){
+    public Route findOne(String rid) throws Exception {
         return routeService.findOne(Integer.parseInt(rid));
     }
 }

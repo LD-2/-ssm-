@@ -1,17 +1,17 @@
 package com.mirror.travel.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.mirror.travel.mapper.RouteImgMapper;
 import com.mirror.travel.mapper.RouteMapper;
 import com.mirror.travel.mapper.SellerMapper;
-import com.mirror.travel.pojo.PageBean;
-import com.mirror.travel.pojo.Route;
-import com.mirror.travel.pojo.RouteImg;
-import com.mirror.travel.pojo.Seller;
+import com.mirror.travel.pojo.*;
 import com.mirror.travel.service.RouteService;
+import com.mirror.travel.utils.baidu.SearchHttpAK;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,14 +65,29 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public Route findOne(Integer rid) {
+    public Route findOne(Integer rid) throws Exception {
+        if(rid==null){
+            return new Route();
+        }
+        //根据rid查询线路的基本信息
         Route route = routeMapper.findById(rid);
+        if(route==null){
+            return new Route();
+        }
 //        System.out.println(route);
         Seller seller = sellerMapper.findBySid(route.getSid());
         route.setSeller(seller);
 //        System.out.println(route);
         List<RouteImg> routeImgs = routeImgMapper.findByRid(rid);
         route.setRouteImgList(routeImgs);
+        Map params = new LinkedHashMap<String, String>();
+        params.put("district_id", route.getDistrictid().toString());
+        params.put("data_type", "all");
+        params.put("ak", SearchHttpAK.AK);
+        JSONArray jsonArray = SearchHttpAK.requestGetAK(SearchHttpAK.URL, params);
+        WeatherInfo weatherInfo = new WeatherInfo();
+        weatherInfo.setForecasts(jsonArray);
+        route.setWeatherInfo(weatherInfo);
         return route;
     }
 }

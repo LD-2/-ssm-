@@ -21,10 +21,10 @@
             var url = data.data.code_url;
             $("#orderId").html(orderId + ",订单金额: " + total_fee + "元");
 
-            // // 生成二维码
-            // createQRCode(url);
-            // //监听订单状态
-            // monitorStatus(orderId);
+            // 生成二维码
+            createQRCode(url);
+            //监听订单状态
+            monitorStatus(orderId);
 
             $.post("order/findPayStatus", {orderId: orderId}, function (data) {
                 console.log("findStatus", data)
